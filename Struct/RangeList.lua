@@ -57,9 +57,10 @@ function RangeList.GetPolarityAt ( list, n )
 end
 
 
---- Transposes a range list by an offset
-function RangeList.Offset ( list, offset )
-  local ret = {}
+---Adds an offset to each value
+-- @param offset the offset value
+function RangeList.Offset ( list, offset, inPlace )
+  local ret = inPlace and list or {}
   for i, v in ipairs ( list ) do
     ret [ i ] = v + offset
   end
@@ -67,7 +68,8 @@ function RangeList.Offset ( list, offset )
 end
 
 
---- Iterates all Ranges
+---Iterates all ranges, ie.: value pairs
+-- @return function iterator
 function RangeList.Ranges ( list )
   local i, len = -1, #list
   return function ()
