@@ -1,19 +1,14 @@
-local bs = require"Search".binary --special binary search function
-
-
---[[--
-  Operations on index range sequences
-  
-  Range list form:
-    an ordered sequence of numbers with an even length
-    each pair of numbers counting is treated as one range
-]]
-
-
 local RangeList = setmetatable ( {}, require"Mt.Class" )
 RangeList.__index = RangeList
 
+local binarySearch = require"Search".Binary
 
+
+--[[--
+  Constructs a new range list, either from a table or from a list of arguments
+  @param [table|value]list the table to use as source or the first value of the list or nothing for empty list
+  @param ... the rest of the values to be used for the list
+]]
 function RangeList.New ( list, ... )
   local ret = type ( list ) == "table" and list or { list, ... }
   assert ( #list % 2 == 0, "Uneven list size" )
@@ -54,7 +49,7 @@ end
 
 --- Return true if the index at i is within a range, false otherwise
 function RangeList.GetPolarityAt ( list, n )
-  local _, i, cur = bs ( list, n )
+  local _, i, cur = binarySearch ( list, n )
   if _ then
     i, cur = _, i
   end
