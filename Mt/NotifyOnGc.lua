@@ -1,1 +1,1 @@
-return { __gc = function ( ... ) print ( "Finalized", ... ) }
+return { __gc = function ( ... ) print ( "Finalized", ... ) end }

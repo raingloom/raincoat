@@ -53,7 +53,7 @@ local mt = {
   __eq = function ( a, b ) return a.x == b.x and a.y == b.y end,
   __lt= function ( a, b ) return a.x < b.x or ( a.x == b.x and a.y < b.y ) end,
   __le = function ( a, b ) return a.x <= b.x and a.y <= b.y end,
-  __tostring = function ( a ) return "vector2d "..a.x..":"..a.y end,
+  __tostring = function ( a ) return "vector2d "..a.x..", "..a.y end,
 }
 vector2 = ffi.metatype ( "vector2_t", mt )
 
