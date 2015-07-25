@@ -2,7 +2,8 @@
   A relational 2D transform library.
 ]]
 local Transform = setmetatable ( {}, require"Raincoat.Mt.Class" )
-local Objects = setmetatable ( {}, require"Raincoat.Mt.Weak" )
+local Objects = {}
+--setmetatable ( Objects, require"Raincoat.Mt.Weak" )
 Transform.__index = Transform
 
 Transform.Objects = Objects--debug access
@@ -98,8 +99,8 @@ end
 
 function Transform:SetPosition ( position, norefresh )
   self.position = position
-  self:Refresh ( )
   if not norefresh then
+    self:Refresh ( )
     self:RecurseOffsprings (
       function ( child )
         child:Refresh ( )
@@ -111,8 +112,8 @@ end
 
 function Transform:SetRadian ( radian, norefresh )
   self.radian = radian
-  self:Refresh ( )
   if not norefresh then
+    self:Refresh ( )
     self:RecurseOffsprings (
       function ( child )
         child:Refresh ( )
@@ -126,9 +127,18 @@ function Transform:Refresh ( )
   local parent = self.parent
   if parent then
     local parentRadian = parent.radian
-    self.globalPosition = parent.position + self.position:rotate ( parentRadian )
+    self.globalPosition = parent.globalPosition + self.position:rotate ( parentRadian )
     self.globalRadian = self.radian + parentRadian
   end
+end
+
+
+function Transform:RefreshChildren ( )
+  self:RecurseOffsprings (
+    function ( child )
+      child:Refresh ( )
+    end
+  )
 end
 
 
