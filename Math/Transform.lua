@@ -1,4 +1,6 @@
---- A 2D relational transform library
+--[[--
+  A relational 2D transform library.
+]]
 local Transform = setmetatable ( {}, require"Raincoat.Mt.Class" )
 local Objects = setmetatable ( {}, require"Raincoat.Mt.Weak" )
 Transform.__index = Transform
@@ -6,29 +8,34 @@ Transform.__index = Transform
 Transform.Objects = Objects--debug access
 
 
-function Transform:__tostring ()
-  return string.format ( "Transform(%s): position:{%f,%f} angle:%f parent.id:%s", self.id, self.position.x, self.position.y, self.angle, self.parent and self.parent.id or "none" )
+function Transform:__tostring ( )
+  return string.format (
+    "transform id(%d) offset({%f,%f},%f) global({%f,%f},%f) parentId(%d)",
+    self.id,
+    self.position.x, self.position.y,    self.radian,
+    self.globalPosition.x, self.globalPosition.y,    self.globalRadian,
+    self.parent and self.parent.id or 0
+  )
 end
 
 
-function Transform.New ( position, angle, parent )
+function Transform.New ( position, radian, parent )
   local id = #Objects + 1
   local ret = setmetatable (
     {
       id = id,
       position = assert ( position, "No position given" ),
-      angle = angle or 0,
-      parent = parent or false,
+      radian = radian or 0,
+      parent = false,
       children = {},
     },
     Transform
   )
   ret.globalPosition = ret.position
-  ret.globalAngle = ret.angle
+  ret.globalRadian = ret.radian
   Objects [id] = ret
   if parent then
-    parent.children [ ret ] = true
-    ret:Refresh()
+    ret:SetParent ( parent )
   end
   return ret
 end
@@ -73,7 +80,7 @@ end
 
 
 
-function Transform:SetParent ( parent )
+function Transform:SetParent ( parent, norefresh )
   local prev = self.parent
   if prev then
     prev.children [ self ] = nil
@@ -82,40 +89,47 @@ function Transform:SetParent ( parent )
   if parent then
     parent.children [ self ] = true
   end
+  if not norefresh then
+    self:Refresh ( )
+  end
   return parent
 end
 
 
-function Transform:SetPosition ( position )
+function Transform:SetPosition ( position, norefresh )
   self.position = position
   self:Refresh ( )
-  self:RecurseOffsprings (
-    function ( child )
-      child:Refresh ( )
-    end
-  )
+  if not norefresh then
+    self:RecurseOffsprings (
+      function ( child )
+        child:Refresh ( )
+      end
+    )
+  end
 end
 
 
-function Transform:SetAngle ( angle )
-  self.angle = angle
+function Transform:SetRadian ( radian, norefresh )
+  self.radian = radian
   self:Refresh ( )
-  self:RecurseOffsprings (
-    function ( child )
-      child:Refresh ( )
-    end
-  )
+  if not norefresh then
+    self:RecurseOffsprings (
+      function ( child )
+        child:Refresh ( )
+      end
+    )
+  end
 end
 
 
 function Transform:Refresh ( )
   local parent = self.parent
-  local angle = parent.angle
-  self.globalPosition = parent.position + self.position:rotate ( angle )
-  self.globalAngle = self.angle + angle
+  if parent then
+    local parentRadian = parent.radian
+    self.globalPosition = parent.position + self.position:rotate ( parentRadian )
+    self.globalRadian = self.radian + parentRadian
+  end
 end
-
-
 
 
 return Transform
