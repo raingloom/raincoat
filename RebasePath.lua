@@ -1,3 +1,4 @@
+--TODO: add redirections to accomodate common repository paths
 return function ( opt )
   opt = opt or {}
   
@@ -12,24 +13,24 @@ return function ( opt )
   
   local Path = opt.path or package.path
   local Base = opt.Base or './'
-  local Rebase = opt.Rebase or '../Libs/'
+  local Target = opt.Target or '../Libs/'
   local Separator = Path:sub ( 1, 1 )
   local BaseSafe = Escape ( Base )
-  local RebaseSafe = Escape ( Rebase )
   local SeparatorSafe = Escape ( Separator )
 
   local Rebaser
   if opt.Append or opt.Append == nil then
     function Rebaser ( path )
-      return path:gsub ( BaseSafe, Rebase ) .. Separator .. path
+      return path:gsub ( BaseSafe, Target ) .. Separator .. path
     end
   else
     function Rebaser ( path )
-      return path:gsub ( BaseSafe, Rebase )
+      return path:gsub ( BaseSafe, Target )
     end
   end
 
   return Path:gsub (
     '[^' .. SeparatorSafe ..']+',
     Rebaser
+  )
 end

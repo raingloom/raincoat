@@ -39,37 +39,10 @@ local function Result()
 end
 
 -- **START BENCHMARKS**
-Test"LUA_MATH"
+local i = 0
 
+Test"TABLE_INSERTIONS"
 
-SubTest"sin"
-local f=math.sin
-i=0
-t=T()+D
-while T()<t do
-  i=i+1
-  f(123.456)
-end
-Result()
-
-
-SubTest"sin"
-local f=math.cos
-i=0
-t=T()+D
-while T()<t do
-  i=i+1
-  f(123.456)
-end
-Result()
-
-
-SubTest"unitrandom"
-local f=math.random
-i=0
-t=T()+D
-while T()<t do
-  i=i+1
-  f()
-end
-Result()
+SubTest"for loop index"
+for j = 1, 10 do
+  
