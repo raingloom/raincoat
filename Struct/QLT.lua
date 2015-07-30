@@ -1,45 +1,52 @@
 --[[--
   Quick Lookup Table
   Actually it is only faster on massive iterations and lookups, but nevermind that
-  Basically makes it easier to get a set of keys and values
+  Basically makes it easier to get a set of keys and values, in exchange for making simply indexing and setting things slower.
+  Quick warning: the table library.... well, it won't work on the returned object
 ]]
+
 
 local QLT = setmetatable ( {}, require 'Raincoat.Mt.Class' )
 
+
 local WeakMT = require 'Raincoat.Mt.Weak'
 
-local Values = setmetatable ( {}, WeakMT )
-local Keys = setmetatable ( {}, WeakMT )
-local Tables = setmetatable ( {}, WeakMT )
+local Values = {}
+local Tables = {}
 
 
 function QLT.New ( t )
-  return setmetatable ( {}, QLT )
-end
-
-
-function QLT:GetKeys ( )
-  return Keys [ self ]
-end
-
-
-function QLT:GetValues ( )
-  return Values [ self ]
+  t = t and setmetatable ( t, nil ) or {}
+  local ret = {}
+  local vt = {}
+  Values [ ret ] = vt
+  Tables [ ret ] = t
+  for _, v in pairs ( t ) do
+    vt [ v ] = true
+  end
+  setmetatable ( ret, QLT )
+  return ret
 end
 
 
 function QLT:__newindex ( k, v )
-  Keys [ self ] = k
-  Values [ self ] = v
-  Tables [ self ] [ k ] = v
+  if v == nil then--free up memory
+    local t = Tables [ self ]
+    local pv = t [ k ]
+    if pv ~= nil then--guard against nil key
+      Values [ self ] [ pv ] = nil
+    end
+    t [ k ] = nil
+  else
+    Values [ self ] [ v ] = true
+    Tables [ self ] [ k ] = v
+  end
 end
---QLT.Set = QLT.__newindex
 
 
 function QLT:__index ( k )
   return Tables [ self ] [ k ]
 end
---QLT.get = QLT.__index
 
 
 function QLT:__pairs ( )
@@ -50,6 +57,17 @@ end
 function QLT:__ipairs ( )
   return ipairs ( Tables [ self ] )
 end
+
+
+function QLT:GetValues ( )
+  return Values [ self ]
+end
+
+
+function QLT:GetKeys ( )
+  return Tables [ self ]
+end
+QLT.GetTables = QLT.GetKeys
 
 
 return QLT
