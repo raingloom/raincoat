@@ -17,10 +17,7 @@ return function ( opt )
   opt = opt or {}
   
   local function Escape ( str )
-    return str:gsub (
-      '%W',
-      '%%%1'
-    )
+    return str:gsub ( '%W', '%%%1' )
   end
   
   local Path = opt.path or package.path
