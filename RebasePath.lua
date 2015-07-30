@@ -19,9 +19,7 @@ return function ( opt )
   local function Escape ( str )
     return str:gsub (
       '%W',
-      function ( c )
-        return '%' .. c
-      end
+      '%%%1'
     )
   end
   
