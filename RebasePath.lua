@@ -7,6 +7,7 @@
     target: the new path component to use
     base: search for this in paths, interpreted as a string pattern, defaults to './'
     limit: limit number of substitutions to this number, defaults to 1
+    anchor: anchor at beginning of path, defaults to true
     mode: defaults to 'replace'
       append: mix the original and the rebased in place
       replace: replace base in place
@@ -30,6 +31,13 @@ return function ( opt )
   local Limit = opt.limit or 1
   local Separator = Path:sub ( 1, 1 )
   local BaseSafe = Escape ( Base )
+  local Anchor = opt.anchor
+  if Anchor == nil then
+    Anchor = true
+  end
+  if Anchor then
+    BaseSafe = '^' .. BaseSafe
+  end
   local SeparatorSafe = Escape ( Separator )
   local PathPattern = '[^' .. SeparatorSafe ..']+'
   
