@@ -12,6 +12,10 @@
       append: mix the original and the rebased in place
       replace: replace base in place
       new: return only the modified paths
+  simple example: package.path = package.path .. dofile "<pathToThisFile>" {
+    base = '../MyLibraries/',--mind the trailing slash
+    mode = 'new',
+  }
 ]]
 return function ( opt )
   opt = opt or {}
