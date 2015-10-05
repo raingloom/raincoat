@@ -1,0 +1,9 @@
+--[[--
+	@module raincoat
+	@author Rain Gloom
+	A collection of loosely related utilities to make everyday Lua easier.
+
+	For contributors:
+	Raincoat modules should be kept separate and only depend on eachother when really necessary.
+	The library should support minimalistic projects as well as larger ones, as such it should be well structured but low on dependencies and easy to simplfy and optimize further.
+]]
