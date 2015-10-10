@@ -25,7 +25,7 @@ local function generator ( buffer, env )
 end
 
 --TODO: figure a way out for passing parameters to the generator
-local function process ( buffer, ... )
+local function preProcess ( buffer, ... )
   local processed, i = {}, 1
 	for bite in assert ( generator ( buffer ) ) ( ... ) do
 		processed [ i ], i = bite, i + 1
@@ -35,5 +35,8 @@ end
 
 return {
   generator = generator,
-  process = process,
+  preProcess = preProcess,
+  process = function ( str, ... )
+    return (loadstring or load) (preProcess ( str, ... ))
+  end,
 }
