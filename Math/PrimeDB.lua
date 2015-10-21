@@ -55,26 +55,5 @@ function pdb.__index(s,i)
 	end
 end
 
-function pdb.pfact(s,n)
-	n=math.floor(math.abs(n))
-	local i,r,p=1,{},2
-	while p<=n do
-		p=s[i]
-		while n%p==0 do
-			n=n/p
-			r[p]=(r[p]or 0)+1
-		end
-		i=i+1
-	end
-	return r
-end
-
-function pdb.factn(s,x)
-	local n=1
-	for k,v in pairs(s:pfact(x)) do
-		n=n*(v+1)
-	end
-	return n
-end
 
 return pdb
