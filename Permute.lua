@@ -18,7 +18,7 @@ function Permute.unordered( t )
 	local mask = {}
 	local ret = {}
 	local l = #t
-	local k = true
+	local k = j <= l
 	return function()
 		if k then
 			local j = 1
