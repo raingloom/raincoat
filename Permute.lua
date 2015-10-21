@@ -8,6 +8,13 @@ local Permute = {}
   @return an iterator function
 ]]
 function Permute.unordered( t )
+	--[[how the magix iz done:
+		this algorithm is a very simple binary counter
+		it creates an array of booleans (the mask)
+		which it then treats as a binary number
+		and keeps on incrementing until
+		integer overflow occurs
+	]]
 	local mask = {}
 	local ret = {}
 	local l = #t
