@@ -2,7 +2,7 @@ local Copy = {}
 
 
 local unpack = unpack or table.unpack
-function Copy.array( t )
+function Copy.sequence( t )
     return {unpack( t )}
 end
 
