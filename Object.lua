@@ -2,7 +2,9 @@
 local copy = require 'raincoat.Copy'.object
 local ok, Object = pcall( require, 'classic' )--try system path
 if not ok then--try submodule through relative path
-    Object = require (...) .. '.classic.src.classic'
+	local here = ...
+	here = here and here:match'[^%.]+$' or ''
+	Object = require( here..'.classic.src.classic' )
 end
 
 
