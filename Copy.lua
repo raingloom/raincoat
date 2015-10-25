@@ -16,8 +16,8 @@ function Copy.pairs( t )
 end
 
 
-functiony Copy.object( t )
-    return setmetatable(Copy.pairs( t ), getmetatable( t ))
+function Copy.object( t )
+    return setmetatable( Copy.pairs( t ), getmetatable( t ) )
 end
 
 

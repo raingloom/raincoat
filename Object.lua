@@ -1,5 +1,5 @@
 --- An extension of the Classic library
-local copy = require 'Raincoat.Copy'.object
+local copy = require 'raincoat.Copy'.object
 local ok, Object = pcall( require, 'classic' )--try system path
 if not ok then--try submodule through relative path
     Object = require (...) .. '.classic.src.classic'
