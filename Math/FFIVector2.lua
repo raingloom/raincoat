@@ -1,11 +1,4 @@
 --Based on Lua JiT's example code and the vector-light library from HardonCollider
-local ffi=require"ffi"
-
-
-ffi.cdef[[
-  typedef struct vector2 { double x, y ;} vector2_t;
-]]
-
 
 local vector2
 local sqrt = math.sqrt
@@ -80,7 +73,19 @@ local mt = {
   __le = function ( a, b ) return a.x <= b.x and a.y <= b.y end,
   __tostring = function ( a ) return "vector2d "..a.x..", "..a.y end,
 }
-vector2 = ffi.metatype ( "vector2_t", mt )
+
+
+local ok, ffi = pcall( require, 'ffi' )
+if ok then
+  ffi.cdef[[
+    typedef struct vector2 { double x, y ;} vector2_t;
+  ]]
+  vector2 = ffi.metatype ( "vector2_t", mt )
+else
+  function vector2( x, y )
+    return setmetatable( { x = x, y = y }, mt )
+  end
+end
 
 
 return vector2
