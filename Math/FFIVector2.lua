@@ -1,5 +1,6 @@
 --Based on Lua JiT's example code and the vector-light library from HardonCollider
 
+
 local vector2
 local sqrt = math.sqrt
 local cos, sin = math.cos, math.sin

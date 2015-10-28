@@ -4,7 +4,7 @@
   y      Y goes from top to bottom
   |
   V
-  This corresponds to the reading direction of English text and screen coordinates.
+  This corresponds to the reading direction of English text and screen coordinates.  
   
   Methods should be pretty self-explanatory.
 ]]
@@ -18,7 +18,7 @@ local max, min = math.max, math.min
 
 
 function Rectangle:__tostring()
-  return 'rectangle{'..self.x..','..self.y..'}'
+  return 'rectangle{'..self.x..','..self.y..' '..self.w..'x'..self.h..'}'
 end
 
 
@@ -58,9 +58,18 @@ end
 
 --Checks whether two rectangles are intersecting.
 function Rectangle:isIntersecting ( other )
-  return
-    self.x + self.w < other.x + other.w and
-    self.y + self.h < other.y + other.h
+  local xi, yi
+  if self.x < other.x then
+    xi = self.x + self.w < other.x
+  else
+    xi = other.x + other.w < self.x
+  end
+  if self.y < other.y then
+    yi = self.y + self.h < other.y
+  else
+    yi = other.y + other.h < self.y
+  end
+  return not (xi and yi)
 end
 
 
