@@ -16,9 +16,4 @@ install:
   - sudo luarocks install luafilesystem
   - sudo luarocks install busted
 
-script:
-  - for lua in /usr/bin/lua*
-  - do
-  -   echo $lua
-  -   busted --lua=$lua spec
-  - done
+script: "for lua in lua5.1 lua5.2 lua5.3 luajit; do echo $lua; busted --lua=$(which $lua) spec; done"
