@@ -11,7 +11,7 @@ install:
   - make linux
   - sudo make install
   - cd ..
-
+  - sudo apt-get update
   - sudo apt-get install luajit
   - sudo apt-get install luarocks
   - sudo luarocks install busted
