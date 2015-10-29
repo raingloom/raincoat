@@ -12,8 +12,8 @@ install:
   - sudo make install
   - cd ..
 
-  - sudo apt-get install lua5.2 lua5.1 luajit luarocks
-
+  - sudo apt-get install luajit
+  - sudo apt-get install luarocks
   - sudo luarocks install busted
 
 script:
