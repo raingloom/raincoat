@@ -56,8 +56,9 @@ function Rectangle.fromPointPair( x1, y1, x2, y2 )
 end
 
 
---Checks whether two rectangles are intersecting.
-function Rectangle:isIntersecting ( other )
+---Checks whether two rectangles are touching.
+-- @return true if there is no overlap, false otherwise
+function Rectangle:checkOverlap( other )
   local xi, yi
   if self.x < other.x then
     xi = self.x + self.w < other.x
@@ -69,10 +70,13 @@ function Rectangle:isIntersecting ( other )
   else
     yi = other.y + other.h < self.y
   end
-  return not (xi and yi)
+  return xi and yi
 end
 
 
+---Creates a rectangle that encompasses the two other rectangles
+-- @tparam Rectangle other the other rectangle
+-- @return a new rectangle
 function Rectangle:union( other )
   return Rectangle.new(
     min( self.x, other.x ),
@@ -81,6 +85,7 @@ function Rectangle:union( other )
     max( self.h, other.h )
   )
 end
+
 
 
 function Rectangle:intersection( other )
