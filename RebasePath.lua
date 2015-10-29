@@ -28,7 +28,7 @@ return function ( opt )
   local Base = opt.base or './'
   local Target = assert ( opt.target, 'No target given' )
   local Limit = opt.limit or 1
-  local Separator = Path:sub ( 1, 1 )
+  local Separator = package.config and package.config:match'.\n(.)' or ';'
   local BaseSafe = Escape ( Base )
   local Anchor = opt.anchor
   if Anchor == nil then
