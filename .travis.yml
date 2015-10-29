@@ -7,9 +7,10 @@ install:
   #install Lua 5.3 (not in Ubuntu repositories yet)
   - wget http://www.lua.org/ftp/lua-5.3.1.tar.gz
   - tar xzf lua-5.3.1.tar.gz
-  - cd lua-5.3.1.tar.gz
+  - cd lua-5.3.1
   - make linux
   - sudo make install
+  - cd ..
 
   - sudo apt-get install lua5.2 lua5.1 luajit luarocks
 
