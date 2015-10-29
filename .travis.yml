@@ -12,12 +12,13 @@ install:
   - sudo make install
   - cd ..
   - sudo apt-get update
-  - sudo apt-get install luajit
-  - sudo apt-get install luarocks
+  - sudo apt-get install luajit lua5.1 lua5.2 luarocks
+  - sudo luarocks install luafilesystem
   - sudo luarocks install busted
 
 script:
   - for lua in /usr/bin/lua*
   - do
+  -   echo $lua
   -   busted --lua=$lua spec
   - done
