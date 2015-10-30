@@ -1,2 +1,2 @@
 --since I like to hand-write most of my classes, but don't want to make new metatable for each of them to call the `new` function when I call the class table itself
-return {__call=function(self,...)return self.New(...)end}
+return {__call=function(self,...)return self.new(...)end}
