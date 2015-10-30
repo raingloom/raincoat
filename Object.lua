@@ -12,7 +12,7 @@ Object = Object:extend()
 
 
 function Object:copy()
-    return (self.__copy or copy)( self )
+		return (self.__copy or copy)( self )
 end
 
 

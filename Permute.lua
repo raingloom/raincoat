@@ -2,10 +2,10 @@ local Permute = {}
 
 
 --[[--
-  Returns an iterator over all unique combinations of a list of (unique) elements.
-  Practically it is a set permutation, but implemented with simple arrays for performance.
-  @param t a list of (unique) elements
-  @return an iterator function
+	Returns an iterator over all unique combinations of a list of (unique) elements.
+	Practically it is a set permutation, but implemented with simple arrays for performance.
+	@param t a list of (unique) elements
+	@return an iterator function
 ]]
 function Permute.unordered( t )
 	--[[how the magix iz done:
