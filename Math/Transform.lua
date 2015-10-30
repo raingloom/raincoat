@@ -14,7 +14,7 @@ function Transform:__tostring ( )
     "transform id(%d) offset({%f,%f},%f) global({%f,%f},%f) parentId(%d)",
     self.id,
     self.position.x, self.position.y,    self.radian,
-    self.globalPosition.x, self.globalPosition.y,    self.globalRadian,
+	self.globalPosition.x, self.globalPosition.y,    self.globalRadian,
     self.parent and self.parent.id or 0
   )
 end

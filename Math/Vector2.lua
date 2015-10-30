@@ -72,7 +72,9 @@ local mt = {
   __eq = function ( a, b ) return a.x == b.x and a.y == b.y end,
   __lt= function ( a, b ) return a.x < b.x or ( a.x == b.x and a.y < b.y ) end,
   __le = function ( a, b ) return a.x <= b.x and a.y <= b.y end,
-  __tostring = function ( a ) return "vector2d "..a.x..", "..a.y end,
+	__tostring = function ( a ) return "vector2d "..a.x..", "..a.y end,
+	__pack = function( s ) return string.pack( 'dd', s.x, s.y ) end,
+	__unpack = function( s ) return string.unpack( 'dd', s ) end,
 }
 
 
