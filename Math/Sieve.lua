@@ -41,11 +41,11 @@ end
 --@return an iterator over all primes
 --the iterator runs indefinitely, so it is up to you to break execution after the necessary number of primes was found
 function sieve.segmented( sieveSize )
-	local primes
+	local primes = {}
 	local generator = coroutine.wrap(
 		function()
 			local sieve = {}
-			primes = { 2 }
+			primes[1] = 2
 			local primeCount = 1
 			local lastPrime = 2
 			local offset = 0
