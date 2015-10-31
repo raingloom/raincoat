@@ -1,6 +1,6 @@
 require 'busted.runner'()
 
-local Rectangle = require 'raincoat.Struct.Rectangle'
+local Rectangle = require 'raincoat.Math.Rectangle'
 describe("2D rectangle class", function()
 	it("tests single vertex collision", function()
 		assert.is_false(
