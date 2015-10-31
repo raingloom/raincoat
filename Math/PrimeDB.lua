@@ -1,59 +1,45 @@
---a relatively stupid library that makes queries for Nth prime simpler
---TODO: fix that horribly poor excuse for a sieve to run faster
---TODO: add optional Lanes supports
-local function coprimes(n,d)
-	return coroutine.wrap(function()
-	d=d or {2}
-	local o,f,p,s=0,{},d[#d]
-	while true do
-		f,s=1,{}
-		for _,v in ipairs(d) do
-			for i=v,n+o,v do
-				s[i-o]=1
-			end
-		end
-		while f do
-			f=nil
-			for i=p,n+o,p do
-				s[i-o]=1
-			end
-			for i=p,n+o do
-				if not s[i-o] then
-					f=1
-					p=i
-					d[#d+1]=p
-					coroutine.yield(p)
-					break
-				end
-			end
-		end
-		o=o+n
-	end
-	end)
-end
+local sieve = require 'raincoat.Math.Sieve'.segmented
 
-pdb={}
-function pdb.new(s,n)
-	local r={2}
-	local g=coprimes(s,r)
-	r.G=g
-	for i=2,n or 0 do
-		r[i]=g()
-	end
-	return setmetatable(r,pdb)
-end
+--[[--
+	Prime number database.
+	A stateful module used for global access to prime numbers.
+]]
+local PrimeDB = {}
+setmetatable( PrimeDB, PrimeDB )
+local configured = false
+local generator
 
-function pdb.__index(s,i)
-	if type(i)=='number' then
-		local g=s.G
-		for j=#s,i do
-			g()
-		end
-		return rawget(s,i)
-	else
-		return pdb[i]
+
+--[[--
+	Configures the database with a sieve size
+	and returns it.
+	Subsequent calls simple return the database.
+	@module PrimeDB
+	@param sieveSize the size of the boolean array to use as a sieve
+	note that memory usage will grow as primes are being discovered
+]]
+local function configure( sieveSize )
+	if configured then
+		return PrimeDB
 	end
+	configured = true
+	generator = sieve( sieveSize )
+	generator( 'setPrimes', PrimeDB )
+	return PrimeDB
+end
+PrimeDB.configure = configure
+
+
+--[[--
+	This is responsible for loading missing primes
+	Since the module
+]]
+function PrimeDB:__index( n )
+	for i = #PrimeDB, n do
+		generator()
+	end
+	return self[ n ]
 end
 
 
-return pdb
+return PrimeDB
