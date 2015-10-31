@@ -11,11 +11,4 @@ local function escape ( s )
 	return ("%q"):format(s:gsub("[\n\v\t]",nl))
 end
 
-local allbytes = {}
-for i = 0, 254 do
-	allbytes[i+1]=string.char(i)
-end
-
-print(escape(table.concat(allbytes)))
-
 return escape
