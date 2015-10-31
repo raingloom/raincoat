@@ -81,14 +81,40 @@ function sieve.segmented( sieveSize )
 			end
 		end
 	)
-	return function( command )
-		if command == 'getPrimes' then
-			return primes
+	return function( command, ... )
+		if command then
+			if command == 'getPrimes' then
+				return primes
+			elseif command == 'setPrimes' then
+				primes = ...
+			else
+				error "invalid command"
+			end
 		else
 			return generator()
 		end
 	end
 end
+
+
+--[[--
+	WARNING: this function does NO sanity checks on the commands you pass to it.
+	@type function
+	@name segmentedPrimeGenerator
+	@param [command] the command to execute
+	@param [...] paramters sent to the command
+	This is the function returned by Sieve.segmented.
+	It does some special things, which one should only mess around with if one _really_ needs them.
+	The function takes an optional `command` argument, which can tell it to do some hackeries.
+	Current hackeries:
+		`getPrimes`
+			returns the internally used sequence of primes
+			it is not a copy of the table, it is the same table, a referenced data structure, modifying it can cause unwanted things to happen
+			bad things even
+		`setPrimes`
+			set the prime sequence to this table
+			be cautious with this one
+]]
 
 
 return sieve
