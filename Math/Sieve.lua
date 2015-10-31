@@ -14,6 +14,7 @@ function sieve.simple ( sieveSize )
 			for i = 1, sieveSize do
 				sieve[ i ] = true
 			end
+			coroutine.yield( 2 )
 			local foundNew = true
 			while foundNew do
 				foundNew = false
@@ -47,6 +48,7 @@ function sieve.segmented( sieveSize )
 			local primeCount = 1
 			local lastPrime = 2
 			local offset = 0
+			coroutine.yield( 2 )
 			while true do
 				for i = 1, sieveSize do
 					sieve[ i ] = true
