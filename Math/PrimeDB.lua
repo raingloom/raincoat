@@ -4,7 +4,7 @@ local sieve = require 'raincoat.Math.Sieve'.segmented
 	Prime number database.
 	A stateful module used for global access to prime numbers.
 ]]
-local PrimeDB = {}
+local PrimeDB = { configured = false }
 setmetatable( PrimeDB, PrimeDB )
 local configured = false
 local generator
@@ -14,20 +14,19 @@ local generator
 	Configures the database with a sieve size
 	and returns it.
 	Subsequent calls simple return the database.
-	@module PrimeDB
 	@param sieveSize the size of the boolean array to use as a sieve
 	note that memory usage will grow as primes are being discovered
 ]]
-local function configure( sieveSize )
+function PrimeDB.configure( sieveSize )
 	if configured then
 		return PrimeDB
 	end
 	configured = true
+	PrimeDB.configured = true
 	generator = sieve( sieveSize )
 	generator( 'setPrimes', PrimeDB )
 	return PrimeDB
 end
-PrimeDB.configure = configure
 
 
 --[[--
