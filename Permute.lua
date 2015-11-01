@@ -1,4 +1,6 @@
 local Permute = {}
+--TODO: fix counter return logic
+error 'wrong implementation, do not use'
 
 
 --[[--
