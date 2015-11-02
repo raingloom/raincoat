@@ -21,4 +21,5 @@ install:
   - sudo luarocks install busted
 
 script:
-  - busted
+  - cd ..
+  - busted raincoat/spec
