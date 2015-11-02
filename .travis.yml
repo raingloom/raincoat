@@ -10,11 +10,11 @@ env:
   - LUA_SERVER="http://www.lua.org/ftp/" LUA_VERSION="lua-5.1.5"
 
 install:
-  - wget $LUA_SERVER/$LUA_VERSION".tar.gz"
-  - tar xzf $LUA_VERSION".tar.gz"
-  - cd $LUA_VERSION
+  - 'wget $LUA_SERVER/$LUA_VERSION".tar.gz"'
+  - 'tar xzf $LUA_VERSION".tar.gz"'
+  - 'cd $LUA_VERSION'
   - '[ $JIT ] && make || make linux'
-  - sudo make install
+  - 'sudo make install'
   - cd ..
   - git clone git://github.com/keplerproject/luarocks.git
   - cd luarocks
