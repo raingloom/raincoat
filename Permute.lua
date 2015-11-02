@@ -4,6 +4,7 @@ local Permute = {}
 
 --[[--
 	Iterates all unordered permutations of a sequence.
+	WARNING: do not modify the returned table!
 	@param t a sequence
 	@return an iterator function
 ]]
@@ -44,6 +45,7 @@ end
 
 --[[--
 	Given an array of upper limits and an optional lower limit (default: 0), it generates sequences of integers where each element of the sequnce is <= then the corresponding higher limit and >= then the lower limit.
+	WARNING: do not modify the returned table!
 	@param limits the sequence of upper limits
 	@param [low] lower limit
 	@return an iterator function
