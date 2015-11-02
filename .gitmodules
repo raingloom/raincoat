@@ -1,3 +1,6 @@
 [submodule "classic"]
 	path = classic
 	url = https://github.com/thefosk/classic.git
+[submodule "memoize"]
+	path = memoize
+	url = https://github.com/kikito/memoize.lua.git
