@@ -19,7 +19,6 @@ install:
   - cd ..
   - sudo luarocks install luafilesystem
   - sudo luarocks install busted
-
-script:
   - cd ..
+script:
   - busted raincoat/spec
