@@ -15,8 +15,8 @@ install:
   - cd luarocks
   - ./configure
   - make build
-  - cd ..
   - sudo make install
+  - cd ..
   - sudo luarocks install luafilesystem
   - sudo luarocks install busted
 
