@@ -14,12 +14,11 @@ install:
   - git clone git://github.com/keplerproject/luarocks.git
   - cd luarocks
   - ./configure
+  - cd ..
   - make build
   - sudo make install
   - sudo luarocks install luafilesystem
   - sudo luarocks install busted
-  - pwd
 
 script:
-  - pwd
   - busted
