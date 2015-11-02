@@ -22,6 +22,11 @@ function Rectangle:__tostring()
 end
 
 
+function Rectangle:__eq( other )
+	return self.x==other.x and self.y==other.y and self.w==other.w and self.h==other.h
+end
+
+
 function Rectangle:translate( x, y )
 	self.x = self.x + x
 	self.x = self.x + y
