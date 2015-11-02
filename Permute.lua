@@ -1,50 +1,45 @@
 local Permute = {}
---TODO: fix counter return logic
-error 'wrong implementation, do not use'
+--TODO: use a bitwise library?(could introduce compatibility issues)
 
 
 --[[--
-	Returns an iterator over all unique combinations of a list of (unique) elements.
-	Practically it is a set permutation, but implemented with simple arrays for performance.
-	@param t a list of (unique) elements
+	Iterates all unordered permutations of a sequence.
+	@param t a sequence
 	@return an iterator function
 ]]
 function Permute.unordered( t )
-	--[[how the magix iz done:
-		this algorithm is a very simple binary counter
-		it creates an array of booleans (the mask)
-		which it then treats as a binary number
-		and keeps on incrementing until
-		integer overflow occurs
-	]]
-	local mask = {}
-	local ret = {}
-	local l = #t
-	local k = l>1
-	return function()
-		if k then
-			local j = 1
-			local r = true
-			while r and j <= l do
-				if mask[j] then
-					mask[j] = false
-					r = true
+	return coroutine.wrap( function()
+		local length = #t
+		local mask = {}
+		local ret = {}
+		for i = 1, 2^length do
+			--refresh the returned permutation
+			local retIndex = 1
+			for i = 1, length do
+				if mask[ i ] then
+					ret[ retIndex ], retIndex = t[ i ], retIndex + 1
+				end
+			end
+			--clear items left from the previous permutation
+			for i = retIndex, length do
+				ret[ i ] = nil
+			end
+			coroutine.yield( ret )
+			--perform a binary addition on the mask
+			local remainder, i = true, 1
+			while remainder and i <= length do
+				if mask[ i ] then
+					mask[ i ] = false
+					remainder = true
 				else
-					mask[j] = true
-					r = false
+					mask[ i ] = true
+					remainder = false
 				end
-				j = j + 1
+				i = i + 1
 			end
-			local m = 1
-			for i = 1, l do
-				if mask[i] then
-					ret[m], m = t[i], m + 1
-				end
-			end
-			k = j <= l
-			return ret
 		end
-	end
+	end)
 end
+
 
 return Permute
