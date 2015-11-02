@@ -22,4 +22,4 @@ install:
 
 script:
   - pwd
-   -busted
+  - busted
