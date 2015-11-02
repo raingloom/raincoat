@@ -13,7 +13,7 @@ install:
   - wget $LUA_SERVER/$LUA_VERSION".tar.gz"
   - tar xzf $LUA_VERSION".tar.gz"
   - cd $LUA_VERSION
-  - [ $JIT ] && make || make linux
+  - '[ $JIT ] && make || make linux'
   - sudo make install
   - cd ..
   - git clone git://github.com/keplerproject/luarocks.git
