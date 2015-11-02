@@ -15,7 +15,7 @@ install:
   - 'cd $LUA_VERSION'
   - '[ $JIT ] && make || make linux'
   - '[ $JIT ] && sudo make install PREFIX=/usr || sudo make install'
-  - '[ $JIT ] && sudo ln -s /usr/bin/luajit /usr/bin/lua'
+  - '[ $JIT ] && sudo ln -s /usr/bin/luajit /usr/bin/lua || true'
   - cd ..
   - git clone git://github.com/keplerproject/luarocks.git
   - cd luarocks
