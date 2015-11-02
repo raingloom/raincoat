@@ -40,4 +40,43 @@ function Factorize.factorize( n, primeFactors )
 end
 
 
+--TODO: fix same factors being returned multiple times
+local kvsplit = require 'raincoat.Copy'.kvsplit
+local upermute = require 'raincoat.Permute'.unordered
+local lpermute = require 'raincoat.Permute'.withinLimits
+function Factorize.allFactors( n, primeFactors )
+	return coroutine.wrap( function()
+		local primes, multiplicities = kvsplit( primeFactors or Factorize.factorize( n ) )
+		local fullLength = #primes
+		
+		local indices = {}
+		for i = 1, #primes do
+			indices[ i ] = i
+		end
+		
+		local primesSubset, multiplicitiesSubset = {}, {}
+		for subsetIndices in upermute( indices ) do
+			local subLength = #subsetIndices
+			--create subset of primes
+			for i = 1, subLength do
+				local j = subsetIndices[ i ]
+				primesSubset[ i ], multiplicitiesSubset[ i ] = primes[ j ], multiplicities[ j ]
+			end
+			--clear leftovers
+			for i = subLength + 1, fullLength do
+				primesSubset[ i ], multiplicitiesSubset[ i ] = nil, nil
+			end
+			--generate products
+			for exponents in lpermute( multiplicitiesSubset ) do
+				local factor = 1
+				for i = 1, subLength do
+					factor = factor * primesSubset[ i ] ^ exponents[ i ]
+				end
+				coroutine.yield( factor )
+			end
+		end
+	end)
+end
+
+
 return Factorize
