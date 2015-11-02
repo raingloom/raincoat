@@ -3,12 +3,17 @@ dist: trusty
 
 language: generic
 
+env:
+  - LUA_SERVER="http://luajit.org/download" LUA_VERSION="LuaJIT-2.0.4" JIT=1
+  - LUA_SERVER="http://www.lua.org/ftp/" LUA_VERSION="lua-5.3.1"
+  - LUA_SERVER="http://www.lua.org/ftp/" LUA_VERSION="lua-5.2.4"
+  - LUA_SERVER="http://www.lua.org/ftp/" LUA_VERSION="lua-5.1.5"
+
 install:
-  #install Lua 5.3 (not in Ubuntu repositories yet)
-  - wget http://www.lua.org/ftp/lua-5.3.1.tar.gz
-  - tar xzf lua-5.3.1.tar.gz
-  - cd lua-5.3.1
-  - make linux
+  - wget $LUA_SERVER/$LUA_VERSION".tar.gz"
+  - tar xzf $LUA_VERSION".tar.gz"
+  - cd $LUA_VERSION
+  - [ $JIT ] && make || make linux
   - sudo make install
   - cd ..
   - git clone git://github.com/keplerproject/luarocks.git
