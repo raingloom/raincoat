@@ -5,21 +5,21 @@ language: generic
 
 install:
   #install Lua 5.3 (not in Ubuntu repositories yet)
-  wget http://www.lua.org/ftp/lua-5.3.1.tar.gz
-  tar xzf lua-5.3.1.tar.gz
-  cd lua-5.3.1
-  make linux
-  sudo make install
-  cd ..
-  git clone git://github.com/keplerproject/luarocks.git
-  cd luarocks
-  ./configure
-  make build
-  sudo make install
-  sudo luarocks install luafilesystem
-  sudo luarocks install busted
-  pwd
+  - wget http://www.lua.org/ftp/lua-5.3.1.tar.gz
+  - tar xzf lua-5.3.1.tar.gz
+  - cd lua-5.3.1
+  - make linux
+  - sudo make install
+  - cd ..
+  - git clone git://github.com/keplerproject/luarocks.git
+  - cd luarocks
+  - ./configure
+  - make build
+  - sudo make install
+  - sudo luarocks install luafilesystem
+  - sudo luarocks install busted
+  - pwd
 
 script:
-  pwd
-  busted
+  - pwd
+   -busted
