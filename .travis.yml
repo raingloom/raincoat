@@ -14,8 +14,8 @@ install:
   - git clone git://github.com/keplerproject/luarocks.git
   - cd luarocks
   - ./configure
-  - cd ..
   - make build
+  - cd ..
   - sudo make install
   - sudo luarocks install luafilesystem
   - sudo luarocks install busted
