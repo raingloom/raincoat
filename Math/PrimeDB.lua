@@ -3,6 +3,9 @@ local sieve = require 'raincoat.Math.Sieve'.segmented
 --[[--
 	Prime number database.
 	A stateful module used for global access to prime numbers.
+	Usage:
+		local primes = require"raincoat.Math.PrimeDB".configure( segmentSize )--larger segment size uses more memory, but is faster
+		print( primes[ N ] )--prints Nth prime
 ]]
 local PrimeDB = { configured = false }
 setmetatable( PrimeDB, PrimeDB )
@@ -29,10 +32,7 @@ function PrimeDB.configure( sieveSize )
 end
 
 
---[[--
-	This is responsible for loading missing primes
-	Since the module
-]]
+--This is responsible for loading missing primes
 function PrimeDB:__index( n )
 	for i = #PrimeDB, n do
 		generator()
