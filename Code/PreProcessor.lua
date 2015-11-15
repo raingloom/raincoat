@@ -24,7 +24,7 @@ local function generator ( buffer, env )
 	return f
 end
 
---TODO: figure a way out for passing parameters to the generator
+
 local function preProcess ( buffer, ... )
 	local processed, i = {}, 1
 	for bite in assert ( generator ( buffer ) ) ( ... ) do
@@ -32,6 +32,7 @@ local function preProcess ( buffer, ... )
 	end
 	return table.concat ( processed )
 end
+
 
 return {
 	generator = generator,
