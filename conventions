@@ -1,0 +1,21 @@
+naming:
+	'Module'
+	'Namespace'
+	'Class'
+	'Global'
+	'Constant' or 'CONSTANT'
+	':method'
+	'.attribute'
+	'_internalVariable'
+	'__metaattribute'
+	'__metamethod'
+	FFI:
+		follow Lua JiT's C-style naming
+
+custom metamethods used:
+	'__copy'
+	'__unpack': return internal values
+		eg.: Vector2:__unpack() return self.x, self.y
+			this enables us to use vectors elegantly in argument lists that expect number pairs
+	'__save': serialize to string
+	'__load': load from string
