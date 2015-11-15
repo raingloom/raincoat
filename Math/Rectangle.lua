@@ -100,6 +100,16 @@ function Rectangle:intersection( other )
 end
 
 
+function Rectangle:area()
+	return (self.w+1)*(self.h+1)
+end
+
+
+function Rectangle:unpack()
+	return self.x, self.y, self.w, self.h
+end
+
+
 --Use C struct if possible to save memory, otherwise fall back to tables
 local ok, ffi = pcall( require, 'ffi' )
 if ok then
