@@ -19,3 +19,15 @@ custom metamethods used:
 			this enables us to use vectors elegantly in argument lists that expect number pairs
 	'__save': serialize to string
 	'__load': load from string
+
+control globals:
+	_[NO]OPT_{opttype}
+		booleans of this form enable/disable certain optimization
+		currently used values for `opttype`:
+			FFISTRUCT
+		precedence:
+			if the optimization adds new functionality, enabling takes precedence
+			if the optimization limits the code in any way (be it an API regression or disallowing some form of monkey-patching), disabling takes precedence
+			if none are specified, then the module can make the choice on its own
+		examples:
+			_NOOPT_FFISTRUCT: don't use C structures instead of tables
