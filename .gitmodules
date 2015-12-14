@@ -4,3 +4,6 @@
 [submodule "memoize"]
 	path = memoize
 	url = https://github.com/kikito/memoize.lua.git
+[submodule "math"]
+	path = math
+	url = https://github.com/raingloom/ntai.git
