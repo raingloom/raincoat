@@ -1,3 +1,13 @@
+--TODO: recursive processing
+local function loadWithEnv( str, env )
+	if setfenv then
+		local f = loadstring( str )
+		setfenv( f, env )
+	else
+		return load( str, nil, nil, env )
+	end
+end
+
 local function generator ( buffer, env )
 	local code, i = { 'return coroutine.wrap ( function ( ... )' }, 2
 	local format = string.format
@@ -17,11 +27,7 @@ local function generator ( buffer, env )
 	end
 	code [ i ] = 'end )'
 	code = table.concat ( code )
-	local f = loadstring ( code )
-	if env then
-		setfenv ( f, env )
-	end
-	return f
+	return loadWithEnv( str, env )
 end
 
 
