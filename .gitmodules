@@ -7,3 +7,6 @@
 [submodule "math"]
 	path = math
 	url = https://github.com/raingloom/ntai.git
+[submodule "gmath"]
+	path = gmath
+	url = https://github.com/raingloom/gamma-th.git
