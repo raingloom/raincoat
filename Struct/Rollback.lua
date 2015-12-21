@@ -33,12 +33,10 @@ function Rlb:__save()
 end
 
 
-function Rlb:__rollback( erase )
+function Rlb:__rollback()
 	local stateid = self.__stateid - 1
 	if stateid > 0 then
-		if erase then
-			self.__states[ stateid + 1 ] = nil
-		end
+		self.__states[ stateid + 1 ] = nil
 		self.__index = self.__states[stateid]
 		return stateid
 	end
