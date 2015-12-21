@@ -51,7 +51,7 @@ end
 --[[--
 	Runs an advanced recursive search on a table.
 	@tparam table tbl
-	@tparam fun a function (or something callable)
+	@param fun a function (or something callable)
 	@tparam function iter the table iterator function, in case you want to use stg other than require
 	@return the discovered value or nothing if it was not found
 	@return the path that led to the value
